@@ -244,8 +244,8 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "
 
 " 主题设置
 set background=dark
-let g:onedark_termcolors=256
-colorscheme onedark
+let g:gruvbox_termcolors=256
+colorscheme gruvbox
 if has("termguicolors")
     " fix bug for vim
     set t_8f=[38;2;%lu;%lu;%lum

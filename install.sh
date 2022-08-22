@@ -435,8 +435,8 @@ function copy_files()
     rm -rf ~/.vimrc.custom.config
     cp ${PWD}/.vimrc.custom.config ~
 
-    rm -rf ~/.ycm_extra_conf.py
-    ln -s ${PWD}/.ycm_extra_conf.py ~
+    #rm -rf ~/.ycm_extra_conf.py
+    #ln -s ${PWD}/.ycm_extra_conf.py ~
 
     mkdir ~/.vim
     rm -rf ~/.vim/colors
@@ -579,7 +579,7 @@ function install_vimplus_on_mac()
     install_prepare_software_on_mac
     copy_files
     install_fonts_on_mac
-    install_ycm
+    #install_ycm
     install_vim_plugin
     print_logo
 }
@@ -599,7 +599,7 @@ function install_vimplus_on_android()
     install_prepare_software_on_android
     copy_files
     install_fonts_on_android
-    install_ycm_on_android
+    #install_ycm_on_android
     install_vim_plugin
     print_logo
 }
@@ -609,7 +609,7 @@ function begin_install_vimplus()
 {
     copy_files
     install_fonts_on_linux
-    install_ycm
+    #install_ycm
     install_vim_plugin
     print_logo
 }
