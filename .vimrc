@@ -128,7 +128,7 @@ Plug 'chxuan/vimplus-startify'
 "  Vim 的类大纲查看器, 显示类/方法/变量, 使用majutsushi/tagbar的v2.3版本
 Plug 'preservim/tagbar'
 "  高效的模糊查找器, 比ctrlp更强大的文件的模糊搜索工具: https://github.com/Yggdroot/LeaderF
-Plug 'Yggdroot/LeaderF'
+Plug 'Yggdroot/LeaderF' " 需要安装 ripgrep: brew install ripgrep / apt install ripgrep
 "  快速跳转,强大的光标快速移动工具，强大到颠覆你的插件观: https://github.com/easymotion/vim-easymotion  https://wklken.me/posts/2015/06/07/vim-plugin-easymotion.html
 Plug 'easymotion/vim-easymotion'
 "  模糊字符搜索插件: https://github.com/haya14busa/incsearch.vim

@@ -296,7 +296,7 @@ isInstall() {
 function install_prepare_software_on_mac() {
     if isInstall xcode-select; then
         xcode-select --install
-        brew install vim gcc cmake ctags-exuberant ack
+        brew install vim gcc cmake ctags-exuberant ripgrep
         macos1014=$(is_macos1014)
         if [ $macos1014 == 1 ]; then
             open /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg
@@ -364,7 +364,7 @@ function install_prepare_software_on_ubuntu_like()
 function install_prepare_software_on_debian()
 {
     sudo apt-get update
-    sudo apt-get install -y cmake build-essential python python-dev python3-dev fontconfig libfile-next-perl ack git
+    sudo apt-get install -y cmake build-essential python python-dev python3-dev fontconfig libfile-next-perl ripgrep git
     sudo apt-get install -y universal-ctags || sudo apt-get install -y exuberant-ctags
     compile_vim_on_debian
 }
@@ -373,7 +373,7 @@ function install_prepare_software_on_debian()
 function install_prepare_software_on_parrot()
 {
     sudo apt-get update
-    sudo apt-get install -y cmake exuberant-ctags build-essential python python-dev python3-dev fontconfig libfile-next-perl ack git
+    sudo apt-get install -y cmake exuberant-ctags build-essential python python-dev python3-dev fontconfig libfile-next-perl ripgrep git
     compile_vim_on_parrot
 }
 
@@ -383,9 +383,9 @@ function install_prepare_software_on_centos()
     version=$(get_centos_version)
     if [ $version -ge 8 ];then
         sudo dnf install -y epel-release
-        sudo dnf install -y vim ctags automake gcc gcc-c++ kernel-devel make cmake python2 python2-devel python3-devel fontconfig ack git
+        sudo dnf install -y vim ctags automake gcc gcc-c++ kernel-devel make cmake python2 python2-devel python3-devel fontconfig ripgrep git
     else
-        sudo yum install -y ctags automake gcc gcc-c++ kernel-devel cmake python-devel python3-devel fontconfig ack git
+        sudo yum install -y ctags automake gcc gcc-c++ kernel-devel cmake python-devel python3-devel fontconfig ripgrep git
         compile_vim_on_centos
     fi
 }
@@ -393,13 +393,13 @@ function install_prepare_software_on_centos()
 # 安装fedora必备软件
 function install_prepare_software_on_fedora()
 {
-    sudo dnf install -y vim ctags automake gcc gcc-c++ kernel-devel cmake python-devel python3-devel fontconfig ack git
+    sudo dnf install -y vim ctags automake gcc gcc-c++ kernel-devel cmake python-devel python3-devel fontconfig ripgrep git
 }
 
 # 安装archlinux必备软件
 function install_prepare_software_on_archlinux()
 {
-    sudo pacman -S --noconfirm vim ctags automake gcc cmake python3 python2 ack git fontconfig
+    sudo pacman -S --noconfirm vim ctags automake gcc cmake python3 python2 ripgrep git fontconfig
     sudo ln -s /usr/lib/libtinfo.so.6 /usr/lib/libtinfo.so.5
 }
 
@@ -434,7 +434,7 @@ function install_software_on_gentoo()
 # 安装opensuse必备软件
 function install_prepare_software_on_opensuse()
 {
-    sudo zypper install -y vim ctags gcc gcc-c++ cmake python-devel python3-devel ack fontconfig git ncurses5-devel
+    sudo zypper install -y vim ctags gcc gcc-c++ cmake python-devel python3-devel ripgrep fontconfig git ncurses5-devel
 }
 
 # 拷贝文件
