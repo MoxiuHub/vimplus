@@ -309,16 +309,34 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
         \ "Unknown"   : "?"
         \ }
 
-" LeaderF
+" LeaderF 配置
 nnoremap <silent> <leader>f :Leaderf file<CR>
 nnoremap <silent> <leader>F :LeaderfFunction<CR>
 nnoremap <silent> <leader>rg :Leaderf rg<CR>
+"let g:Lf_ShortcutF = '<c-p>'
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
-let g:Lf_DefaultExternal = 'rg'
+let g:Lf_DefaultExternalTool='rg'
+let g:Lf_WindowHeight = 0.30
+let g:Lf_CacheDirectory = s:cachedir
+let g:Lf_StlColorscheme = 'powerline'
+let g:Lf_WorkingDirectoryMode = 'AF'
+let g:Lf_RootMarkers = ['.git', '.svn', '.hg', '.project', '.root']
+let g:Lf_PreviewResult = {
+        \ 'File': 0,
+        \ 'Buffer': 0,
+        \ 'Mru': 0,
+        \ 'Tag': 0,
+        \ 'BufTag': 1,
+        \ 'Function': 1,
+        \ 'Line': 1,
+        \ 'Colorscheme': 0,
+        \ 'Rg': 0,
+        \ 'Gtags': 0
+        \}
 let g:Lf_WildIgnore = {
-            \ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh'],
-            \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
+            \ 'dir': ['.svn','.git','.hg','.idea','.vscode','.wine','.deepinwine','.oh-my-zsh','node_modules'],
+            \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]','*.lock','*.iml']
             \}
 let g:Lf_UseCache = 0
 " Use `[g` and `]g` to navigate diagnostics
