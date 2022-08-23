@@ -27,7 +27,16 @@ An automatic configuration program for vim
     git clone https://github.com/MoxiuHub/vimplus.git ~/.vimplus
     cd ~/.vimplus
     ./install.sh
-    
+
+#### Coc marketplace
+
+    # 安装 marketplace
+    :CocInstall coc-marketplace
+    # 打开面板
+    :CocList marketplace
+    # 搜索python 相关子插件
+    :CocList marketplace python
+
 注: apline用户请预先安装git,bash: apk add git bash  
 
 #### 设置Nerd Font
