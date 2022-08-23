@@ -115,6 +115,30 @@ An automatic configuration program for vim
 紧跟vimplus的步伐，尝鲜新特性
 
     ./update.sh
+    
+#### LeaderF 操作
+
+    <C-C>, <ESC> : 退出
+    <C-R> : 在模糊查询和正则表达式模式间切换
+    <C-F> : 在全路径搜索和名字搜索模式间切换
+    <Tab> : 切换成normal模式
+    <C-V>, <S-Insert> : 从剪切板里copy字符串进行查询
+    <C-U> : 清除已经打出的字符
+    <C-J>, <C-K> : 在结果列表中移动
+    <Up>, <Down> : 从历史记录里调出上一次/下一次的输入pattern
+    <2-LeftMouse> or <CR> : 打开在光标处的文件或者被选择的多个文件
+    <F5>  : 刷新缓存
+    <C-P> : 预览选中结果
+    <C-Up> : 在预览popup窗口里滚动向上
+    <C-Down> : 在预览popup窗口里滚动向下
+    
+    g:Lf_ShowHidden 设置1则显示隐藏文件. 默认值0.
+    g:Lf_PreviewInPopup 设置成1, 预览(preview)会在弹出(popup)窗口里显示, 而不会在原来的文件所在的窗口里显示. 默认值是0.
+    g:Lf_WindowHeight 设置窗口高度
+    g:Lf_CacheDirectory 设置缓存路径
+    g:Lf_StlColorscheme 设置状态栏配色方案
+    g:Lf_PreviewResult 设置哪几个功能自动显示preview
+    g:Lf_ReverseOrder 设置为1, 结果从下到上显示, 跟fzf/CtrlP一致, 默认是0, 从上倒下显示.
 
 ## 自定义
 
