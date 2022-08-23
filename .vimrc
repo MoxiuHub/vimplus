@@ -10,7 +10,7 @@
 " License: MIT
 
 "{{{ 通用设置
-let mapleader = ","      " 定义<leader>键
+let mapleader=','        " 定义<leader>键
 set nocompatible         " 设置不兼容原始vi模式
 filetype on              " 设置开启文件类型侦测
 filetype plugin on       " 设置加载对应文件类型的插件
@@ -31,7 +31,7 @@ set mouse=a              " 设置鼠标可点击
 set clipboard+=unnamed   " 设置vim和系统共用剪贴板 📋
 "}}}
 
-"{{{  代码缩进和排版
+"{  代码缩进和排版
 set autoindent              " 设置自动缩进
 set cindent                 " 设置使用C/C++语言的自动缩进方式
 set cinoptions=g0,:0,N-s,(0 " 设置C/C++语言的具体缩进方式
@@ -46,15 +46,15 @@ set nowrap                  " 禁止折行
 set backspace=2             " 使用回车键正常处理indent,eol,start等
 set sidescroll=10           " 设置向右滚动字符数
 set foldenable              " 禁用折叠代码
-set nofoldenable            " 禁用折叠代码
-set foldenable              " 开始折叠
+"set nofoldenable            " 禁用折叠代码
+set foldenable              " 开启折叠
 set foldmethod=syntax       " 设置语法折叠
 set foldcolumn=0            " 设置折叠区域的宽度
 set foldlevel=1             " 设置折叠层数为
-set foldlevelstart=99       " 打开文件是默认不折叠代码
+"set foldlevelstart=99       " 打开文件是默认不折叠代码
 "set foldclose=all          " 设置为自动关闭折叠                
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>  " 用空格键来开关折叠
-"}}}
+"}
 
 "{{{ 代码补全
 set wildmenu                " vim自身命名行模式智能补全
@@ -103,16 +103,16 @@ if has("gui_running")
 endif
 "}}}
 
-"{{{ 卸载默认插件UnPlug
+"{{{ 卸载默认插件 UnPlug
+"  插件管理器: Plug 安装:
+"  curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+"      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 function! s:deregister(repo)
   let repo = substitute(a:repo, '[\/]\+$', '', '')
   let name = fnamemodify(repo, ':t:s?\.git$??')
   call remove(g:plugs, name)
 endfunction
 command! -nargs=1 -bar UnPlug call s:deregister(<args>)
-"  插件管理器: Plug 安装:
-"  curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-"      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 "}}}
 
 "{{{ 插件列表
@@ -134,12 +134,10 @@ Plug 'chxuan/vimplus-startify'
 Plug 'preservim/tagbar'
 "  高效的模糊查找器, 比ctrlp更强大的文件的模糊搜索工具: https://github.com/Yggdroot/LeaderF
 Plug 'Yggdroot/LeaderF'
-"  全局搜索插件, 强大的文本搜索工具: https://einverne.github.io/post/2019/07/vim-plugin-mileszs-ack-vim.html
-Plug 'mileszs/ack.vim'
-"  快速跳转,强大的光标快速移动工具，强大到颠覆你的插件观: https://github.com/easymotion/vim-easymotion  https://wklken.me/posts/2015/06/07/vim-plugin-easymotion.html
-Plug 'easymotion/vim-easymotion'
-"  模糊字符搜索插件: https://github.com/haya14busa/incsearch.vim
-Plug 'haya14busa/incsearch.vim'
+"  "  快速跳转,强大的光标快速移动工具，强大到颠覆你的插件观: https://github.com/easymotion/vim-easymotion  https://wklken.me/posts/2015/06/07/vim-plugin-easymotion.html
+"  Plug 'easymotion/vim-easymotion'
+"  "  模糊字符搜索插件: https://github.com/haya14busa/incsearch.vim
+"  Plug 'haya14busa/incsearch.vim'
 "  代码资源管理器: https://github.com/preservim/nerdtree#getting-started
 Plug 'preservim/nerdtree'
 "  NerdTree 文件类型高亮: https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
@@ -206,7 +204,7 @@ nnoremap <leader>ve :edit $MYVIMRC<cr>
 nnoremap <leader>vc :edit ~/.vimrc.custom.config<cr>
 nnoremap <leader>vp :edit ~/.vimrc.custom.plugins<cr>
 
-" 查看vimplus的help文件
+" 查看 vimplus 的help文件
 nnoremap <leader>h :view +let\ &l:modifiable=0 ~/.vimplus/help.md<cr>
 
 " 打开当前光标所在单词的vim帮助文档
@@ -274,28 +272,28 @@ nnoremap <leader>r :ReplaceTo<space>
 
 " nerdtree
 nnoremap <silent> <leader>n :NERDTreeToggle<cr>
-let g:NERDTreeFileExtensionHighlightFullName = 1
-let g:NERDTreeExactMatchHighlightFullName = 1
-let g:NERDTreePatternMatchHighlightFullName = 1
-let g:NERDTreeHighlightFolders = 1
-let g:NERDTreeHighlightFoldersFullName = 1
+let g:NERDTreeFileExtensionHighlightFullName=1
+let g:NERDTreeExactMatchHighlightFullName=1
+let g:NERDTreePatternMatchHighlightFullName=1
+let g:NERDTreeHighlightFolders=1
+let g:NERDTreeHighlightFoldersFullName=1
 let g:NERDTreeDirArrowExpandable='▷'
 let g:NERDTreeDirArrowCollapsible='▼'
-let g:netrw_liststyle = 3
+let g:netrw_liststyle=3
 
 " tagbar
 let g:tagbar_width = 30
 nnoremap <silent> <leader>t :TagbarToggle<cr>
 
 " incsearch.vim
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
+"  map /  <Plug>(incsearch-forward)
+"  map ?  <Plug>(incsearch-backward)
+"  map g/ <Plug>(incsearch-stay)
 
 " vim-easymotion
-let g:EasyMotion_smartcase = 1
-map <leader>w <Plug>(easymotion-bd-w)
-nmap <leader>w <Plug>(easymotion-overwin-w)
+"  let g:EasyMotion_smartcase = 1
+"  map <leader>w <Plug>(easymotion-bd-w)
+"  nmap <leader>w <Plug>(easymotion-overwin-w)
 
 " nerdtree-git-plugin
 let g:NERDTreeGitStatusIndicatorMapCustom = {
@@ -312,9 +310,8 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
         \ }
 
 " LeaderF
-nnoremap <leader>f :LeaderfFile .<cr>
 nnoremap <silent> <leader>f :Leaderf file<CR>
-"  nnoremap <silent> <leader>F :LeaderfFunction<CR>
+nnoremap <silent> <leader>F :LeaderfFunction<CR>
 nnoremap <silent> <leader>rg :Leaderf rg<CR>
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
@@ -324,17 +321,16 @@ let g:Lf_WildIgnore = {
             \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
             \}
 let g:Lf_UseCache = 0
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-" vim COC, GoTo code navigation.
+" GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-
-" ack
-nnoremap <leader>F :Ack!<space>
 
 " echodoc.vim
 let g:echodoc_enable_at_startup = 1
