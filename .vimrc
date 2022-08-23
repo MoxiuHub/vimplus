@@ -318,7 +318,6 @@ let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
 let g:Lf_DefaultExternalTool='rg'
 let g:Lf_WindowHeight = 0.30
-let g:Lf_CacheDirectory = s:cachedir
 let g:Lf_StlColorscheme = 'powerline'
 let g:Lf_WorkingDirectoryMode = 'AF'
 let g:Lf_RootMarkers = ['.git', '.svn', '.hg', '.project', '.root']
