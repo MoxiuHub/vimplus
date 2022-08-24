@@ -278,10 +278,6 @@ An automatic configuration program for vim
 
     可以试试dconf-editor软件来设置，可以参考[这里][76]。
 
-- **`使用第三方库时怎么让ycm补全第三方库API？`**
-
-    vimplus安装完毕之后，`~`目录下将会生成两个隐藏文件分别是.vimrc和.ycm_extra_conf.py，其中.vimrc是vim的配置文件，.ycm_extra_conf.py是ycm插件的配置文件，当你需要创建一个project时，需要将.ycm_extra_conf.py拷贝到project的顶层目录，通过修改该配置文件里面的`flags`变量来添加你的第三方库路径。
-
 - **`使用vi命令报错：E492: Not an editor command:`**
 
     vimplus安装完成后，linux下可能会同时存在vi和vim命令，执行vi时，vi加载~/.vimrc文件可能会报错，但不影响使用，如果要消除错误可以设置软链接`ln -s /usr/bin/vim /usr/bin/vi`
