@@ -13,6 +13,11 @@
 """"""""""               通用设置                 """"""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  通用设置
+set hidden
+set nobackup
+set nowritebackup
+set updatetime=300
+set shortmess+=c
 let mapleader=','        " 定义<leader>键
 set nocompatible         " 设置不兼容原始vi模式
 filetype on              " 设置开启文件类型侦测
@@ -62,22 +67,6 @@ set hlsearch                " 高亮显示搜索结果
 set incsearch               " 开启实时搜索功能
 set ignorecase              " 搜索时大小写不敏感
 
-"  " gvim/macvim设置
-"  if has("gui_running")
-"      let system = system('uname -s')
-"      if system == "Darwin\n"
-"          set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete:h18 " 设置字体
-"      else
-"          set guifont=DroidSansMono\ Nerd\ Font\ Regular\ 18      " 设置字体
-"      endif
-"      set guioptions-=m           " 隐藏菜单栏
-"      set guioptions-=T           " 隐藏工具栏
-"      set guioptions-=L           " 隐藏左侧滚动条
-"      set guioptions-=r           " 隐藏右侧滚动条
-"      set guioptions-=b           " 隐藏底部滚动条
-"      set showtabline=0           " 隐藏Tab栏
-"      set guicursor=n-v-c:ver5    " 设置光标为竖线
-"  endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""             代码缩进和排版              """"""""""
@@ -95,13 +84,12 @@ set smarttab                " 在行和段开始处使用制表符
 set nowrap                  " 禁止折行
 set backspace=2             " 使用回车键正常处理indent,eol,start等
 set sidescroll=10           " 设置向右滚动字符数
-set foldenable              " 禁用折叠代码
-"set nofoldenable            " 禁用折叠代码
-set foldenable              " 开启折叠
+set foldenable              " 启用折叠代码
+"set nofoldenable           " 禁用折叠代码
 set foldmethod=syntax       " 设置语法折叠
 set foldcolumn=0            " 设置折叠区域的宽度
 set foldlevel=1             " 设置折叠层数为
-"set foldlevelstart=99       " 打开文件是默认不折叠代码
+set foldlevelstart=99       " 打开文件是默认不折叠代码
 "set foldclose=all          " 设置为自动关闭折叠                
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>  " 用空格键来开关折叠
 "  代码补全
@@ -156,8 +144,6 @@ Plug 'tpope/vim-commentary'
 "  重复上一次操作: https://github.com/tpope/vim-repeat
 Plug 'tpope/vim-repeat'
 "  代码、注释、表格对齐: https://blog.csdn.net/techfield/article/details/84186402
-Plug 'godlygeek/tabular'
-" if/end/endif/endfunction补全, 如 if 之后 自动添加 end 等: https://github.com/tpope/vim-endwise
 Plug 'tpope/vim-endwise'
 "  markdown实时预览: https://github.com/iamcco/markdown-preview.vim/blob/master/README_cn.md#%E4%BD%BF%E7%94%A8%E5%92%8C%E8%AE%BE%E7%BD%AE
 Plug 'iamcco/mathjax-support-for-mkdp'
@@ -312,9 +298,16 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
 nnoremap <silent> <leader>f :Leaderf file<CR>
 nnoremap <silent> <leader>F :LeaderfFunction<CR>
 nnoremap <silent> <leader>rg :Leaderf rg<CR>
-"let g:Lf_ShortcutF = '<c-p>'
+" don't show the help in normal mode
+let g:Lf_HideHelp = 1
+let g:Lf_UseCache = 0
+let g:Lf_UseVersionControlTool = 0
+let g:Lf_IgnoreCurrentBufferName = 1
+" popup mode
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
+"  let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
+let g:Lf_ShowDevIcons = 1
 let g:Lf_DefaultExternalTool='rg'
 let g:Lf_WindowHeight = 0.30
 let g:Lf_StlColorscheme = 'powerline'
@@ -329,14 +322,41 @@ let g:Lf_PreviewResult = {
         \ 'Function': 1,
         \ 'Line': 1,
         \ 'Colorscheme': 0,
-        \ 'Rg': 0,
+        \ 'Rg': 1,
         \ 'Gtags': 0
         \}
 let g:Lf_WildIgnore = {
         \ 'dir': ['.svn','.git','.hg','.idea','.vscode','.wine','.deepinwine','.oh-my-zsh','node_modules'],
         \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]','*.lock','*.iml']
         \}
-let g:Lf_UseCache = 0
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file.
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1):
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+"  回车完成补全
+"  inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+"  完成时预览窗口自动消失
+augroup complete
+  autocmd!
+  autocmd CompleteDone * pclose
+augroup end
+
 "  Use `[g` and `]g` to navigate diagnostics
 "  Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
@@ -350,10 +370,6 @@ nmap <silent> gr <Plug>(coc-references)
 
 "  echodoc.vim
 let g:echodoc_enable_at_startup = 1
-
-"  tabular
-nnoremap <leader>l :Tab /\|<cr>
-nnoremap <leader>= :Tab /=<cr>
 
 "  vim-smooth-scroll
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
