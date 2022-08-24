@@ -127,7 +127,6 @@ Plug 'preservim/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 "  NerdTree 显示 git 状态 : https://github.com/Xuyuanp/nerdtree-git-plugin
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'ryanoasis/vim-devicons'
 "  显示文件类型图标,配合 NerdTree 使用: https://github.com/ryanoasis/vim-devicons
 Plug 'ryanoasis/vim-devicons'
 " 状态栏插件, 可以取代powerline的状态栏美化插件: https://github.com/vim-airline/vim-airline
@@ -139,13 +138,11 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive'
 "  自动增加、替换配对符的插件: https://github.com/tpope/vim-surround
 Plug 'tpope/vim-surround'
-"  快速注释代码插件. 单行注释用 gcc，多行注释先进入可视模式再 gc，取消注释用 gcu : https://github.com/tpope/vim-commentary
+"  "  快速注释代码插件. 单行注释用 gcc，多行注释先进入可视模式再 gc，取消注释用 gcu : https://github.com/tpope/vim-commentary
 Plug 'tpope/vim-commentary'
 "  重复上一次操作: https://github.com/tpope/vim-repeat
 Plug 'tpope/vim-repeat'
-"  代码、注释、表格对齐: https://blog.csdn.net/techfield/article/details/84186402
-Plug 'tpope/vim-endwise'
-"  markdown实时预览: https://github.com/iamcco/markdown-preview.vim/blob/master/README_cn.md#%E4%BD%BF%E7%94%A8%E5%92%8C%E8%AE%BE%E7%BD%AE
+"  "  markdown: https://blog.csdn.net/techfield/article/details/84186402
 Plug 'iamcco/mathjax-support-for-mkdp'
 Plug 'iamcco/markdown-preview.vim'
 "  优化搜索，移动光标后清除高亮: https://github.com/junegunn/vim-slash
