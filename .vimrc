@@ -66,7 +66,9 @@ command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 set hlsearch                " 高亮显示搜索结果
 set incsearch               " 开启实时搜索功能
 set ignorecase              " 搜索时大小写不敏感
-
+set tags=tags
+set autochdir
+set modifiable
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""             代码缩进和排版              """"""""""
@@ -96,6 +98,7 @@ nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>  " 用空格�
 set wildmenu                " vim自身命名行模式智能补全
 set completeopt-=preview    " 补全时不显示窗口，只显示补全列表
 
+let g:Lf_GtagsAutoGenerate = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""               插件列表                 """"""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -113,14 +116,8 @@ Plug 'chxuan/prepare-code'
 Plug 'chxuan/vim-buffer'
 "  vimplus开始页面
 Plug 'chxuan/vimplus-startify'
-"  Vim 的类大纲查看器, 显示类/方法/变量, 使用majutsushi/tagbar的v2.3版本
-Plug 'preservim/tagbar'
-"  高效的模糊查找器, 比ctrlp更强大的文件的模糊搜索工具: https://github.com/Yggdroot/LeaderF
-Plug 'Yggdroot/LeaderF' " 需要安装 ripgrep: brew install ripgrep / apt install ripgrep
-"  快速跳转,强大的光标快速移动工具，强大到颠覆你的插件观: https://github.com/easymotion/vim-easymotion  https://wklken.me/posts/2015/06/07/vim-plugin-easymotion.html
-Plug 'easymotion/vim-easymotion'
-"  模糊字符搜索插件: https://github.com/haya14busa/incsearch.vim
-Plug 'haya14busa/incsearch.vim'
+"  高效的模糊查找器, 比ctrlp更强大的文件的模糊搜索工具: https://github.com/Yggdroot/LeaderF 依赖： ripgrep 安装 automake autoconf ctage
+Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 "  代码资源管理器: https://github.com/preservim/nerdtree#getting-started
 Plug 'preservim/nerdtree'
 "  NerdTree 文件类型高亮: https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
@@ -138,17 +135,13 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive'
 "  自动增加、替换配对符的插件: https://github.com/tpope/vim-surround
 Plug 'tpope/vim-surround'
-"  "  快速注释代码插件. 单行注释用 gcc，多行注释先进入可视模式再 gc，取消注释用 gcu : https://github.com/tpope/vim-commentary
+"  快速注释代码插件. 单行注释用 gcc，多行注释先进入可视模式再 gc，取消注释用 gcu : https://github.com/tpope/vim-commentary
 Plug 'tpope/vim-commentary'
 "  重复上一次操作: https://github.com/tpope/vim-repeat
 Plug 'tpope/vim-repeat'
-"  "  markdown: https://blog.csdn.net/techfield/article/details/84186402
+"  markdown: https://blog.csdn.net/techfield/article/details/84186402
 Plug 'iamcco/mathjax-support-for-mkdp'
 Plug 'iamcco/markdown-preview.vim'
-"  优化搜索，移动光标后清除高亮: https://github.com/junegunn/vim-slash
-Plug 'junegunn/vim-slash'
-"  显示git提交记录: https://github.com/junegunn/gv.vim
-Plug 'junegunn/gv.vim'
 "  建自己的文本对象插件
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent'
@@ -159,14 +152,13 @@ Plug 'sgur/vim-textobj-parameter'
 Plug 'Shougo/echodoc.vim'
 "  让翻页更顺畅: https://github.com/terryma/vim-smooth-scroll
 Plug 'terryma/vim-smooth-scroll'
-"  强化f和F键: https://github.com/rhysd/clever-f.vim
-Plug 'rhysd/clever-f.vim'
 "  缩进改进插件: https://www.vim.org/scripts/script.php?script_id=974
 Plug 'vim-scripts/indentpython.vim'
-"  Emoji🐶补全: https://github.com/rhysd/github-complete.vim
-Plug 'rhysd/github-complete.vim'
 "  vim中文文档: https://github.com/yianwillis/vimcdoc
 Plug 'yianwillis/vimcdoc'
+"  go install gocode
+Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' } 
+
 "  加载自定义插件
 if filereadable(expand($HOME . '/.vimrc.custom.plugins'))
     source $HOME/.vimrc.custom.plugins
@@ -240,12 +232,6 @@ let g:airline_right_alt_sep = ''
 "  prepare-code : https://github.com/chxuan/prepare-code#%E4%BD%BF%E7%94%A8
 let g:prepare_code_plugin_path = expand($HOME . "/.vim/plugged/prepare-code")
 
-"  vim-buffer
-nnoremap <silent> <c-p> :PreviousBuffer<cr>
-nnoremap <silent> <c-n> :NextBuffer<cr>
-nnoremap <silent> <leader>d :CloseBuffer<cr>
-nnoremap <silent> <leader>D :BufOnly<cr>
-
 "  vim-edit
 nnoremap Y :CopyText<cr>
 nnoremap D :DeleteText<cr>
@@ -263,19 +249,10 @@ let g:NERDTreeDirArrowExpandable='▷'
 let g:NERDTreeDirArrowCollapsible='▼'
 let g:netrw_liststyle=3
 
-"  tagbar
-let g:tagbar_width = 30
-nnoremap <silent> <leader>t :TagbarToggle<cr>
-
 "  incsearch.vim
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
-
-"  vim-easymotion
-let g:EasyMotion_smartcase = 1
-map <leader>w <Plug>(easymotion-bd-w)
-nmap <leader>w <Plug>(easymotion-overwin-w)
 
 " nerdtree-git-plugin
 let g:NERDTreeGitStatusIndicatorMapCustom = {
@@ -312,7 +289,7 @@ let g:Lf_WorkingDirectoryMode = 'AF'
 let g:Lf_RootMarkers = ['.git', '.svn', '.hg', '.project', '.root']
 let g:Lf_PreviewResult = {
         \ 'File': 0,
-        \ 'Buffer': 0,
+        \ 'Buffer': 1,
         \ 'Mru': 0,
         \ 'Tag': 0,
         \ 'BufTag': 1,
@@ -320,7 +297,7 @@ let g:Lf_PreviewResult = {
         \ 'Line': 1,
         \ 'Colorscheme': 0,
         \ 'Rg': 1,
-        \ 'Gtags': 0
+        \ 'Gtags': 1
         \}
 let g:Lf_WildIgnore = {
         \ 'dir': ['.svn','.git','.hg','.idea','.vscode','.wine','.deepinwine','.oh-my-zsh','node_modules'],
@@ -378,4 +355,3 @@ noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 if filereadable(expand($HOME . '/.vimrc.custom.config'))
     source $HOME/.vimrc.custom.config
 endif
-
