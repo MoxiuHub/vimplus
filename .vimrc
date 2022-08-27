@@ -48,7 +48,6 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "
 set background=dark
 let g:gruvbox_termcolors=256
 colorscheme gruvbox
-:colo space-vim-dark
 if has("termguicolors")
     " fix bug for vim
     set t_8f=[38;2;%lu;%lu;%lum
