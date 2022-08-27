@@ -52,15 +52,23 @@ function copy_files()
     rm -rf ~/.vimrc
     ln -s ${PWD}/.vimrc ~
 
+    vimrc_plugins=$HOME"/.vimrc.custom.plugins"
+    is_exist=$(is_exist_file $vimrc_plugins)
+    if [ $is_exist != 1 ]; then
+        cp ${PWD}/.vimrc.custom.plugins ~
+    fi
+
+    vimrc_config=$HOME"/.vimrc.custom.config"
+    is_exist=$(is_exist_file $vimrc_config)
+    if [ $is_exist != 1 ]; then
+        cp ${PWD}/.vimrc.custom.config ~
+    fi
+
+    rm -rf ~/.ycm_extra_conf.py
+    ln -s ${PWD}/.ycm_extra_conf.py ~
+
     rm -rf ~/.vim/colors
     ln -s ${PWD}/colors ~/.vim
-
-    rm -rf ~/.vim.base 
-    ln -s ~/.vimplus/.vim/.vim.base ~/.vim.base    
-    rm -rf ~/.vim.plugins
-    ln -s ~/.vimplus/.vim/.vim.plugins ~/.vim.plugins 
-    rm -rf ~/.vim.setting
-    ln -s ~/.vimplus/.vim/.vim.setting ~/.vim.setting
 
     rm -rf ~/.vim/ftplugin
     ln -s ${PWD}/ftplugin ~/.vim
@@ -75,8 +83,17 @@ function print_logo()
     color="$(tput setaf 6)"
     normal="$(tput sgr0)"
     printf "${color}"
-    echo 'vimplus is now updated!'
+    echo '        __                __           '
+    echo '__   __/_/___ ___  ____  / /_  _______ '
+    echo '\ \ / / / __ `__ \/ __ \/ / / / / ___/ '
+    echo ' \ V / / / / / / / /_/ / / /_/ (__  )  '
+    echo '  \_/_/_/ /_/ /_/ ,___/_/\____/____/   '
+    echo '               /_/                     ...is now updated!'
+    echo ''
+    echo ''
     echo 'Just enjoy it!'
+    echo 'p.s. Follow me at https://github.com/chxuan.'
+    echo ''
     printf "${normal}"
 }
 

@@ -6,10 +6,10 @@ An automatic configuration program for vim
 <p align="center">
     <a href="#build" alt="build"><img src="https://img.shields.io/badge/build-passing-brightgreen.svg" /></a>
     <a href="#安装" alt="platform"><img src="https://img.shields.io/badge/platform-MacOSX%20%7C%20Linux%2064bit%20%7C%20Docker%20%7C%20WSL%20%7C%20Android-brightgreen.svg" /></a>
-    <a href="https://github.com/MoxiuHub/vimplus/stargazers" alt="stars"><img src="https://img.shields.io/github/stars/MoxiuHub/vimplus.svg?style=popout&label=stars" /></a>
-    <a href="https://github.com/MoxiuHub/vimplus/forks" alt="forks"><img src="https://img.shields.io/github/forks/MoxiuHub/vimplus.svg?style=popout&label=forks" /></a>
-    <a href="https://github.com/MoxiuHub/vimplus/graphs/contributors" alt="contributors"><img src="https://img.shields.io/github/contributors/MoxiuHub/vimplus" /></a>
-    <a href="https://github.com/MoxiuHub/vimplus/blob/master/LICENSE" alt="lincense"><img src="https://img.shields.io/badge/license-MIT-blue.svg" /></a>
+    <a href="https://github.com/chxuan/vimplus/stargazers" alt="stars"><img src="https://img.shields.io/github/stars/chxuan/vimplus.svg?style=popout&label=stars" /></a>
+    <a href="https://github.com/chxuan/vimplus/forks" alt="forks"><img src="https://img.shields.io/github/forks/chxuan/vimplus.svg?style=popout&label=forks" /></a>
+    <a href="https://github.com/chxuan/vimplus/graphs/contributors" alt="contributors"><img src="https://img.shields.io/github/contributors/chxuan/vimplus" /></a>
+    <a href="https://github.com/chxuan/vimplus/blob/master/LICENSE" alt="lincense"><img src="https://img.shields.io/badge/license-MIT-blue.svg" /></a>
 </p>
 
 ![main][2]
@@ -24,19 +24,10 @@ An automatic configuration program for vim
 
 #### 安装vimplus
 
-    git clone https://github.com/MoxiuHub/vimplus.git ~/.vimplus
+    git clone https://github.com/chxuan/vimplus.git ~/.vimplus
     cd ~/.vimplus
     ./install.sh
-
-#### Coc marketplace
-
-    # 安装 marketplace
-    :CocInstall coc-marketplace
-    # 打开面板
-    :CocList marketplace
-    # 搜索python 相关子插件
-    :CocList marketplace python
-
+    
 注: apline用户请预先安装git,bash: apk add git bash  
 
 #### 设置Nerd Font
@@ -81,7 +72,7 @@ An automatic configuration program for vim
 
 #### 安装vimplus
 
-    git clone https://github.com/MoxiuHub/vimplus.git ~/.vimplus
+    git clone https://github.com/chxuan/vimplus.git ~/.vimplus
     cd ~/.vimplus
     ./install.sh //不加sudo
     
@@ -106,7 +97,7 @@ An automatic configuration program for vim
 
 #### 安装vimplus
 
-    git clone https://github.com/MoxiuHub/vimplus.git ~/.vimplus
+    git clone https://github.com/chxuan/vimplus.git ~/.vimplus
     cd ~/.vimplus
     ./install.sh
     
@@ -116,29 +107,20 @@ An automatic configuration program for vim
 
     ./update.sh
     
-#### LeaderF 操作
 
-    <C-C>, <ESC> : 退出
-    <C-R> : 在模糊查询和正则表达式模式间切换
-    <C-F> : 在全路径搜索和名字搜索模式间切换
-    <Tab> : 切换成normal模式
-    <C-V>, <S-Insert> : 从剪切板里copy字符串进行查询
-    <C-U> : 清除已经打出的字符
-    <C-J>, <C-K> : 在结果列表中移动
-    <Up>, <Down> : 从历史记录里调出上一次/下一次的输入pattern
-    <2-LeftMouse> or <CR> : 打开在光标处的文件或者被选择的多个文件
-    <F5>  : 刷新缓存
-    <C-P> : 预览选中结果
-    <C-Up> : 在预览popup窗口里滚动向上
-    <C-Down> : 在预览popup窗口里滚动向下
+### Docker
+
+[ubuntu-vimplus][79]是vimplus基于ubuntu18.04的docker镜像，无需安装vimplus，即可快速体验vimplus带来的快乐
+
+    docker run -it chxuan/ubuntu-vimplus
     
-    g:Lf_ShowHidden 设置1则显示隐藏文件. 默认值0.
-    g:Lf_PreviewInPopup 设置成1, 预览(preview)会在弹出(popup)窗口里显示, 而不会在原来的文件所在的窗口里显示. 默认值是0.
-    g:Lf_WindowHeight 设置窗口高度
-    g:Lf_CacheDirectory 设置缓存路径
-    g:Lf_StlColorscheme 设置状态栏配色方案
-    g:Lf_PreviewResult 设置哪几个功能自动显示preview
-    g:Lf_ReverseOrder 设置为1, 结果从下到上显示, 跟fzf/CtrlP一致, 默认是0, 从上倒下显示.
+
+## 自定义
+
+> * [~/.vimrc][82]为vimplus的默认配置，一般不做修改
+> * [~/.vimrc.custom.plugins][83]为用户自定义插件列表，用户增加、卸载插件请修改该文件
+> * [~/.vimrc.custom.config][84]为用户自定义配置文件，一般性配置请放入该文件，可覆盖[~/.vimrc][82]里的配置
+
 
 ## 插件列表
 
@@ -226,6 +208,8 @@ An automatic configuration program for vim
 | `fa`                | 查找字母a，然后再按f键查找下一个          |
 | `<leader>e`         | 快速编辑~/.vimrc文件                      |
 | `<leader>s`         | 重新加载~/.vimrc文件                      |
+| `<leader>vp`        | 快速编辑~/.vimrc.custom.plugins文件       |
+| `<leader>vc`        | 快速编辑~/.vimrc.custom.config文件        |
 | `<leader>h`         | 打开vimplus帮助文档                       |
 | `<leader>H`         | 打开当前光标所在单词的vim帮助文档         |
 | `<leader><leader>t` | 生成try-catch代码块                       |
@@ -237,9 +221,17 @@ An automatic configuration program for vim
 
 ## FAQ
 
+- **`vimplus怎么安装新插件？`**
+
+    编辑[~/.vimrc.custom.plugins][83]，添加自定义插件。
+
+- **`vimplus怎么添加自定义配置？`**
+
+    编辑[~/.vimrc.custom.config][84]，添加自定义配置。
+
 - **`vimplus安装脚本会在自己电脑上安装哪些软件？`**
 
-    网络良好情况下，vimplus只需30分钟左右即可将vim cpp环境配置好，vimplus真正的做到了一键配置，不让用户操心。vimplus会安装一些必备软件，比如说python、cmake、gcc、fontconfig等，vimplus也考虑到了有些系统的vim不支持python，它会自动去下载vim源码将python支持编译进去，vimplus也会安装nerd-font不让vim显示出现乱码, 而且vimplus也支持macos和linux众多发行版，让linux发烧友频繁切换发行版而不用操心vim环境配置。最后说了这么多，不如看[vimplus安装脚本][78]来的直接:smile:。
+    网络良好情况下，vimplus只需30分钟左右即可将vim cpp环境配置好，vimplus真正的做到了一键配置，不让用户操心。vimplus会安装一些必备软件，比如说python、cmake、gcc、fontconfig等，vimplus也考虑到了有些系统的vim不支持python，它会自动去下载vim源码将python支持编译进去，vimplus也会安装nerd-font不让vim显示出现乱码，最最重要的是vimplus实现了ycm自动编译安装，给折腾了几天ycm都没有安装好的用户带来了新的希望，而且vimplus也支持macos和linux众多发行版，让linux发烧友频繁切换发行版而不用操心vim环境配置。最后说了这么多，不如看[vimplus安装脚本][78]来的直接:smile:。
 
 - **`启动vim报错：RequestsDependencyWarning: Old version of cryptography ([1, 2, 3]) may cause slowdown.`**
 
@@ -261,6 +253,10 @@ An automatic configuration program for vim
 
     可以试试dconf-editor软件来设置，可以参考[这里][76]。
 
+- **`使用第三方库时怎么让ycm补全第三方库API？`**
+
+    vimplus安装完毕之后，`~`目录下将会生成两个隐藏文件分别是.vimrc和.ycm_extra_conf.py，其中.vimrc是vim的配置文件，.ycm_extra_conf.py是ycm插件的配置文件，当你需要创建一个project时，需要将.ycm_extra_conf.py拷贝到project的顶层目录，通过修改该配置文件里面的`flags`变量来添加你的第三方库路径。
+
 - **`使用vi命令报错：E492: Not an editor command:`**
 
     vimplus安装完成后，linux下可能会同时存在vi和vim命令，执行vi时，vi加载~/.vimrc文件可能会报错，但不影响使用，如果要消除错误可以设置软链接`ln -s /usr/bin/vim /usr/bin/vi`
@@ -268,6 +264,10 @@ An automatic configuration program for vim
 - **`怎么自定义文件头，比如说添加作者、创建时间？`**
 
     你可以修改[chxuan/prepare-code][67]插件来达到目的，可以参考[这里][77]。
+
+- **`安装vimplus在“[ 95%] Building CXX object ycm/CMakeFiles/ycm_core.dir/ycm_core.cpp.o”等进度时出现编译报错`**
+
+    编译ycm需要消耗较大内存，建议内存大于1G，实在不行也可以开启linux swap分区。
 
 - **`以上没有我遇到的问题怎么办？`**
 
@@ -282,22 +282,88 @@ An automatic configuration program for vim
 
 > 有代码贡献或有好的建议，帮助vimplus发展的小伙伴
 
-<a href="https://github.com/MoxiuHub" target="_blank" title="MoxiuHub">
-<img src="https://github.com/MoxiuHub.png?size=64" width="64" height="64" alt="MoxiuHub">
+<a href="https://github.com/chxuan" target="_blank" title="chxuan">
+<img src="https://github.com/chxuan.png?size=64" width="64" height="64" alt="chxuan">
 </a>
+<a href="https://github.com/dofy" target="_blank" title="dofy">
+<img src="https://github.com/dofy.png?size=64" width="64" height="64" alt="dofy">
+</a>
+<a href="https://github.com/urain39" target="_blank" title="urain39">
+<img src="https://github.com/urain39.png?size=64" width="64" height="64" alt="urain39">
+</a>
+<a href="https://github.com/freedomDR" target="_blank" title="freedomDR">
+<img src="https://github.com/freedomDR.png?size=64" width="64" height="64" alt="freedomDR">
+</a>
+<a href="https://github.com/starifly" target="_blank" title="starifly">
+<img src="https://github.com/starifly.png?size=64" width="64" height="64" alt="starifly">
+</a>
+<a href="https://github.com/Shaloc" target="_blank" title="Shaloc">
+<img src="https://github.com/Shaloc.png?size=64" width="64" height="64" alt="Shaloc">
+</a>
+<a href="https://github.com/jokerkeny" target="_blank" title="jokerkeny">
+<img src="https://github.com/jokerkeny.png?size=64" width="64" height="64" alt="jokerkeny">
+</a>
+<a href="https://github.com/xuthus5" target="_blank" title="xuthus5">
+<img src="https://github.com/xuthus5.png?size=64" width="64" height="64" alt="xuthus5">
+</a>
+<a href="https://github.com/zhoumengkang" target="_blank" title="zhoumengkang">
+<img src="https://github.com/zhoumengkang.png?size=64" width="64" height="64" alt="zhoumengkang">
+</a>
+<a href="https://github.com/tuberry" target="_blank" title="tuberry">
+<img src="https://github.com/tuberry.png?size=64" width="64" height="64" alt="tuberry">
+</a>
+<a href="https://github.com/wyg1997" target="_blank" title="wyg1997">
+<img src="https://github.com/wyg1997.png?size=64" width="64" height="64" alt="wyg1997">
+</a>
+<a href="https://github.com/happinesslijian" target="_blank" title="happinesslijian">
+<img src="https://github.com/happinesslijian.png?size=64" width="64" height="64" alt="happinesslijian">
+</a>
+<a href="https://github.com/wangling12" target="_blank" title="wangling12">
+<img src="https://github.com/wangling12.png?size=64" width="64" height="64" alt="wangling12">
+</a>
+<a href="https://github.com/ardinzh" target="_blank" title="ardinzh">
+<img src="https://github.com/ardinzh.png?size=64" width="64" height="64" alt="ardinzh">
+</a>
+<a href="https://github.com/BD7IWD" target="_blank" title="BD7IWD">
+<img src="https://github.com/BD7IWD.png?size=64" width="64" height="64" alt="BD7IWD">
+</a>
+<a href="https://github.com/Ro0tk1t" target="_blank" title="Ro0tk1t">
+<img src="https://github.com/Ro0tk1t.png?size=64" width="64" height="64" alt="Ro0tk1t">
+</a>
+
+
+## 支持开源:heart:
+
+> 有意愿献爱心的小伙伴，务必将github账号写入捐款备注哦，谢谢大家
+
+| wechat                                                                                                     | alipay                                                                                                       |
+| ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| <a href='#支持开源'><img src="https://github.com/chxuan/vimplus/blob/master/screenshots/wechat.png" height="150" width="150" /></a> | <a href='#支持开源'><img src="https://github.com/chxuan/vimplus/blob/master/screenshots/alipay.png" height="150" width="150" /></a> |
+
+| 序号  | 支持者             | RMB   | 时间       |
+| ----- | -------            | ----- | -----      |
+| 1     | [zhoumengkang][80] | ¥50   | 2019-09-28 |
+| 2     | [zhoumengkang][80] | ¥50   | 2019-09-29 |
+| 3     | [zibraque][85]     | ¥50   | 2019-11-25 |
+| 4     | [gfreewind][86]    | ¥20   | 2019-12-27 |
+| 5     | [wh656325437][88]  | ¥20   | 2020-07-02 |
+| 6     | [luguifang][89]    | ¥20   | 2020-07-12 |
+| 7     | [liyewen521][90]   | ¥20   | 2020-07-27 |
+| 8     | [xht19980305][91]  | ¥20   | 2020-08-14 |
+
 
 ## vimplus:star:趋势图
 
-![Stargazers over time](https://starchart.cc/MoxiuHub/vimplus.svg)
+![Stargazers over time](https://starchart.cc/chxuan/vimplus.svg)
 
 
 ## License
 
-This software is licensed under the [MIT license][75]. © 2021 MoxiuHub
+This software is licensed under the [MIT license][75]. © 2016 chxuan
 
 
-  [1]: https://raw.githubusercontent.com/MoxiuHub/vimplus/master/screenshots/vimplus-logo.png
-  [2]: https://raw.githubusercontent.com/MoxiuHub/vimplus/master/screenshots/main.png
+  [1]: https://raw.githubusercontent.com/chxuan/vimplus/master/screenshots/vimplus-logo.png
+  [2]: https://raw.githubusercontent.com/chxuan/vimplus/master/screenshots/main.png
   [3]: https://brew.sh/
   [4]: https://github.com/junegunn/vim-plug
   [5]: https://github.com/Valloric/YouCompleteMe
@@ -346,6 +412,8 @@ This software is licensed under the [MIT license][75]. © 2021 MoxiuHub
   [80]: https://github.com/zhoumengkang
   [81]: https://github.com/chxuan/vimplus/issues/208
   [82]: https://github.com/chxuan/vimplus/blob/master/.vimrc
+  [83]: https://github.com/chxuan/vimplus/blob/master/.vimrc.custom.plugins
+  [84]: https://github.com/chxuan/vimplus/blob/master/.vimrc.custom.config
   [85]: https://github.com/zibraque
   [86]: https://github.com/gfreewind
   [87]: https://termux.com/

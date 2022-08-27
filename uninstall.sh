@@ -2,9 +2,7 @@
 
 rm -rf ~/.vim
 rm -rf ~/.vimrc
-rm -rf ~/.vim.base 
-rm -rf ~/.vim.plugins
-rm -rf ~/.vim.setting
+rm -rf ~/.ycm_extra_conf.py
 
-echo "OK, Uninstall Done!"
+echo "Done!"
 
