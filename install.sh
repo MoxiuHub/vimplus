@@ -40,6 +40,21 @@ function get_linux_distro()
     fi
 }
 
+isInstall() {
+    # 判断是否安装了node
+    if ! type "$1" >/dev/null 2>&1; then
+        echo "$1 未安装, 准备安装 $1"
+        return 0
+    else
+        echo "$1 已安装"
+        return 1
+    fi
+    # 使用示例:
+    # if isInstall node; then
+    #     echo '开始安装 xxx'
+    # fi
+}
+
 # 获取日期
 function get_datetime()
 {
@@ -280,13 +295,13 @@ function compile_vim_on_centos()
 # 安装mac平台必备软件
 function install_prepare_software_on_mac()
 {
-    xcode-select --install
-
-    brew install vim gcc cmake ctags-exuberant
-
-    macos1014=$(is_macos1014)
-    if [ $macos1014 == 1 ]; then
-        open /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg
+    if isInstall node; then
+      xcode-select --install
+      brew install vim gcc cmake ctags-exuberant
+      macos1014=$(is_macos1014)
+      if [ $macos1014 == 1 ]; then
+          open /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg
+      fi
     fi
 }
 
