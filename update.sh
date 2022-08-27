@@ -52,18 +52,6 @@ function copy_files()
     rm -rf ~/.vimrc
     ln -s ${PWD}/.vimrc ~
 
-    vimrc_plugins=$HOME"/.vimrc.custom.plugins"
-    is_exist=$(is_exist_file $vimrc_plugins)
-    if [ $is_exist != 1 ]; then
-        cp ${PWD}/.vimrc.custom.plugins ~
-    fi
-
-    vimrc_config=$HOME"/.vimrc.custom.config"
-    is_exist=$(is_exist_file $vimrc_config)
-    if [ $is_exist != 1 ]; then
-        cp ${PWD}/.vimrc.custom.config ~
-    fi
-
     rm -rf ~/.vim/colors
     ln -s ${PWD}/colors ~/.vim
 
@@ -80,17 +68,8 @@ function print_logo()
     color="$(tput setaf 6)"
     normal="$(tput sgr0)"
     printf "${color}"
-    echo '        __                __           '
-    echo '__   __/_/___ ___  ____  / /_  _______ '
-    echo '\ \ / / / __ `__ \/ __ \/ / / / / ___/ '
-    echo ' \ V / / / / / / / /_/ / / /_/ (__  )  '
-    echo '  \_/_/_/ /_/ /_/ ,___/_/\____/____/   '
-    echo '               /_/                     ...is now updated!'
-    echo ''
-    echo ''
+    echo 'vimplus is now updated!'
     echo 'Just enjoy it!'
-    echo 'p.s. Follow me at https://github.com/MoxiuHub.'
-    echo ''
     printf "${normal}"
 }
 

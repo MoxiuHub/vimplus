@@ -46,8 +46,6 @@
 | `fa`                | 查找字母a，然后再按f键查找下一个          |
 | `,e`         | 快速编辑~/.vimrc文件                      |
 | `,s`         | 重新加载~/.vimrc文件                      |
-| `,vp`        | 快速编辑~/.vimrc.custom.plugins文件       |
-| `,vc`        | 快速编辑~/.vimrc.custom.config文件        |
 | `,h`         | 打开vimplus帮助文档                       |
 | `,H`         | 打开当前光标所在单词的vim帮助文档         |
 | `,,t` | 生成try-catch代码块                       |
