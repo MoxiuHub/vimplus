@@ -2,6 +2,9 @@
 
 rm -rf ~/.vim
 rm -rf ~/.vimrc
+rm -rf ~/.vim.base 
+rm -rf ~/.vim.plugins
+rm -rf ~/.vim.setting
 
-echo "Done!"
+echo "OK, Uninstall Done!"
 

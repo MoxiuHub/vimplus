@@ -400,6 +400,13 @@ function copy_files()
     rm -rf ~/.vim/colors
     ln -s ${PWD}/colors ~/.vim
 
+    rm -rf ~/.vim.base 
+    ln -s ~/.vimplus/.vim/.vim.base ~/.vim.base    
+    rm -rf ~/.vim.plugins
+    ln -s ~/.vimplus/.vim/.vim.plugins ~/.vim.plugins 
+    rm -rf ~/.vim.setting
+    ln -s ~/.vimplus/.vim/.vim.setting ~/.vim.setting
+
     rm -rf ~/.vim/ftplugin
     ln -s ${PWD}/ftplugin ~/.vim
 
