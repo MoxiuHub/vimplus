@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+bash ./install_go_vim_deps.sh
+
 # 获取linux发行版名称
 function get_linux_distro()
 {
