@@ -21,6 +21,7 @@ syntax on                " 自动语法高亮
 set t_Co=256             " 开启256色支持
 set cmdheight=2          " 设置命令行的高度
 set showcmd              " select模式下显示选中的行数
+set selectmode=mouse     " 在选择模式下用鼠标来选择文本
 set ruler                " 总是显示光标位置
 set laststatus=2         " 总是显示状态栏
 set number               " 开启行号显示
@@ -28,6 +29,9 @@ set cursorline           " 高亮显示当前行
 set whichwrap+=<,>,h,l   " 设置光标键跨行
 set ttimeoutlen=0        " 设置<ESC>键响应时间
 set virtualedit=block,onemore   " 允许光标出现在最后一个字符的后面
+set updatetime=300       " 减少延迟
+set signcolumn=yes       " 一直显示列号 
+set showmatch            " 显示括号匹配
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 代码缩进和排版
@@ -52,6 +56,26 @@ set nofoldenable         " 禁用折叠代码
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set wildmenu             " vim自身命名行模式智能补全
 set completeopt-=preview " 补全时不显示窗口，只显示补全列表
+" 使用 TAB 触发器完成与前面的字符和导航。
+" NOTE: 使用命令 ':verbose imap <tab>' 确保选项卡没有被映射
+" NOTE: 默认情况下总是选择完整的项目，您可能需要启用
+" 在你的配置文件中没有选择 `"suggest.noselect": true`。
+" 其他插件，然后将其放入您的配置中。
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1):
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 搜索设置
@@ -64,10 +88,12 @@ set ignorecase          " 搜索时大小写不敏感
 " 缓存设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nobackup            " 设置不备份
+set nowritebackup       " 只有在编辑时不需要备份文件的情况下才需要
 set noswapfile          " 禁止生成临时文件
 set autoread            " 文件在vim之外修改过，自动重新读入
 set autowrite           " 设置自动保存
 set confirm             " 在处理未保存或只读文件的时候，弹出确认
+" set noundofile       " 没有撤消文件
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 编码设置
@@ -111,16 +137,15 @@ command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 " 插件列表
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
-
-"  Plug 'chxuan/cpp-mode'
+Plug 'flazz/vim-colorschemes'
+Plug 'fatih/vim-go'        " install: :GoInstallBinaries
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'chxuan/vim-edit'
-"  Plug 'chxuan/change-colorscheme'
 Plug 'chxuan/prepare-code'
-"  Plug 'chxuan/vim-buffer'
 Plug 'chxuan/vimplus-startify'
 Plug 'preservim/tagbar'
 Plug 'Yggdroot/LeaderF'
-"  Plug 'mileszs/ack.vim'
+Plug 'morhetz/gruvbox'
 Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/incsearch.vim'
 Plug 'jiangmiao/auto-pairs'
@@ -133,7 +158,6 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-endwise'
-"  Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
@@ -159,9 +183,9 @@ call plug#end()
 runtime macros/matchit.vim
 
 " 编辑vimrc相关配置文件
-nnoremap <leader>e :edit $MYVIMRC<cr>
-nnoremap <leader>vc :edit ~/.vimrc.custom.config<cr>
-nnoremap <leader>vp :edit ~/.vimrc.custom.plugins<cr>
+nnoremap <leader>ve :edit $MYVIMRC<cr>
+"  nnoremap <leader>vc :edit ~/.vimrc.custom.config<cr>
+"  nnoremap <leader>vp :edit ~/.vimrc.custom.plugins<cr>
 
 " 查看vimplus的help文件
 nnoremap <leader>h :view +let\ &l:modifiable=0 ~/.vimplus/help.md<cr>
@@ -193,9 +217,32 @@ nnoremap <leader><leader>p "+p
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
 
 " 主题设置
-set background=dark
-let g:gruvbox_termcolors=256
+set background=dark    " Setting dark mode
+"set background=light   " Setting light mode
 colorscheme gruvbox
+let g:gruvbox_transparent_bg=2 " 启用透明背景。
+let g:gruvbox_termcolors=256
+let g:gruvbox_contrast_dark='hard' "更改暗模式对比度。medium / hard / medium
+let g:gruvbox_contrast_light='hard' "更改暗模式对比度。medium / hard / medium
+"  let g:gruvbox_number_column='bg1'
+nnoremap <silent> [oh :call gruvbox#hls_show()<CR>
+nnoremap <silent> ]oh :call gruvbox#hls_hide()<CR>
+nnoremap <silent> coh :call gruvbox#hls_toggle()<CR>
+nnoremap * :let @/ = ""<CR>:call gruvbox#hls_show()<CR>*
+nnoremap / :let @/ = ""<CR>:call gruvbox#hls_show()<CR>/
+nnoremap ? :let @/ = ""<CR>:call gruvbox#hls_show()<CR>?
+" airline
+let g:airline_theme="gruvbox"
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+
 if has("termguicolors")
     " fix bug for vim
     set t_8f=[38;2;%lu;%lu;%lum
@@ -207,38 +254,6 @@ set termguicolors
 
 "netrw
 let g:netrw_liststyle=3
-
-" airline
-let g:airline_theme="onedark"
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-
-" cpp-mode
-"  nnoremap <leader>y :CopyCode<cr>
-"  nnoremap <leader>p :PasteCode<cr>
-"  nnoremap <leader>U :GoToFunImpl<cr>
-"  nnoremap <silent> <leader>a :Switch<cr>
-"  nnoremap <leader><leader>fp :FormatFunParam<cr>
-"  nnoremap <leader><leader>if :FormatIf<cr>
-"  nnoremap <leader><leader>t dd :GenTryCatch<cr>
-"  xnoremap <leader><leader>t d :GenTryCatch<cr>
-
-" change-colorscheme
-"  nnoremap <silent> <F9> :PreviousColorScheme<cr>
-"  inoremap <silent> <F9> <esc> :PreviousColorScheme<cr>
-"  nnoremap <silent> <F10> :NextColorScheme<cr>
-"  inoremap <silent> <F10> <esc> :NextColorScheme<cr>
-"  nnoremap <silent> <F11> :RandomColorScheme<cr>
-"  inoremap <silent> <F11> <esc> :RandomColorScheme<cr>
-"  nnoremap <silent> <F12> :ShowColorScheme<cr>
-"  inoremap <silent> <F12> <esc> :ShowColorScheme<cr>
 
 " prepare-code
 let g:prepare_code_plugin_path = expand($HOME . "/.vim/plugged/prepare-code")
