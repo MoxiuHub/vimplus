@@ -31,7 +31,7 @@ set showcmd              " select模式下显示选中的行数
 set ruler                " 总是显示光标位置
 set laststatus=2         " 总是显示状态栏
 set number               " 开启行号显示
-set cursorline           " 高亮显示当前行
+set cursorline cursorcolumn   " 高亮显示当前行和列
 set whichwrap+=<,>,h,l   " 设置光标键跨行
 set ttimeoutlen=0        " 设置<ESC>键响应时间
 set virtualedit=block,onemore   " 允许光标出现在最后一个字符的后面
@@ -98,7 +98,6 @@ nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>  " 用空格�
 set wildmenu                " vim自身命名行模式智能补全
 set completeopt-=preview    " 补全时不显示窗口，只显示补全列表
 
-let g:Lf_GtagsAutoGenerate = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""               插件列表                 """"""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -269,6 +268,7 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
         \ }
 
 "  LeaderF 配置
+"let g:Lf_ShortcutF = "<leader>f"
 nnoremap <silent> <leader>f :Leaderf file<CR>
 nnoremap <silent> <leader>F :LeaderfFunction<CR>
 nnoremap <silent> <leader>rg :Leaderf rg<CR>
@@ -296,8 +296,8 @@ let g:Lf_PreviewResult = {
         \ 'Function': 1,
         \ 'Line': 1,
         \ 'Colorscheme': 0,
-        \ 'Rg': 1,
-        \ 'Gtags': 1
+        \ 'Rg': 0,
+        \ 'Gtags': 0
         \}
 let g:Lf_WildIgnore = {
         \ 'dir': ['.svn','.git','.hg','.idea','.vscode','.wine','.deepinwine','.oh-my-zsh','node_modules'],
