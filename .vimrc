@@ -68,7 +68,7 @@ set scrolloff=5          " 垂直滚动时，光标距离顶部/底部的位置�
 "     代码补全
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set wildmenu             " 命令模式下，底部操作指令按下 Tab 键自动补全
-set wildmode=longest:list,full " 第一次按下 Tab，会显示所有匹配的操作指令的清单；第二次按下 Tab，会依次选择各个指令
+"set wildmode=longest:list,full " 第一次按下 Tab，会显示所有匹配的操作指令的清单；第二次按下 Tab，会依次选择各个指令
 set completeopt-=preview " 补全时不显示窗口，只显示补全列表
 " 使用 TAB 触发器完成与前面的字符和导航。
 " NOTE: 使用命令 ':verbose imap <tab>' 确保选项卡没有被映射
@@ -193,6 +193,12 @@ Plug 'Shougo/echodoc.vim'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'rhysd/clever-f.vim'
 Plug 'vim-scripts/indentpython.vim'
+Plug 'pangloss/vim-javascript'    " JavaScript support
+Plug 'leafgarland/typescript-vim' " TypeScript syntax
+Plug 'maxmellon/vim-jsx-pretty'   " JS and JSX syntax
+Plug 'jparise/vim-graphql'        " GraphQL syntax
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 " 加载自定义插件
 if filereadable(expand($HOME . '/.vimrc.custom.plugins'))
@@ -203,11 +209,6 @@ call plug#end()
 
 " load vim default plugin
 runtime macros/matchit.vim
-
-" 编辑vimrc相关配置文件
-nnoremap <leader>ve :edit $MYVIMRC<cr>
-"  nnoremap <leader>vc :edit ~/.vimrc.custom.config<cr>
-"  nnoremap <leader>vp :edit ~/.vimrc.custom.plugins<cr>
 
 " 查看vimplus的help文件
 nnoremap <leader>h :view +let\ &l:modifiable=0 ~/.vimplus/help.md<cr>
@@ -315,7 +316,6 @@ map g/ <Plug>(incsearch-stay)
 let g:EasyMotion_smartcase = 1
 map <leader>w <Plug>(easymotion-bd-w)
 nmap <leader>w <Plug>(easymotion-overwin-w)
-
 " nerdtree-git-plugin
 let g:NERDTreeGitStatusIndicatorMapCustom = {
             \ "Modified"  : "✹",
@@ -331,19 +331,34 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
             \ }
 
 " LeaderF 配置
-nnoremap <leader>f :LeaderfFile .<cr>
+" don't show the help in normal mode
+let g:Lf_HideHelp = 1
+let g:Lf_UseCache = 0
+let g:Lf_UseVersionControlTool = 0
+let g:Lf_IgnoreCurrentBufferName = 1
 let g:Lf_WildIgnore = {
-            \ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh'],
-            \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
+            \ 'dir': ['.svn','.git','dist','build','.idea','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh'],
+            \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.iml','*.so','*.py[co]']
             \}
 let g:Lf_UseCache = 0
+let g:Lf_ShowHidden=1
+let g:Lf_WindowHeight = 0.30
 let mapleader=','
-"  nnoremap <leader>f :LeaderfFile .<cr>
+"nnoremap <leader>f :LeaderfFile .<cr>
 nnoremap <silent> <leader>f :Leaderf file<CR>
+" 函数搜索（仅当前文件里）
 nnoremap <silent> <leader>F :LeaderfFunction<CR>
+" 模糊搜索，很强大的功能，迅速秒搜
 nnoremap <silent> <leader>rg :Leaderf rg<CR>
+" 历史打开过的文件
+nnoremap <silent> <Leader>m :Leaderf mru<CR>
+" Buffer
+nnoremap <silent> <Leader>b :Leaderf buffer<CR>
+let g:Lf_WorkingDirectoryMode = 'AF'
+let g:Lf_RootMarkers = ['.git', '.svn', '.hg', '.project', '.root']
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
+let g:Lf_DefaultExternalTool='rg'
 let g:Lf_DefaultExternal = 'rg'
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
