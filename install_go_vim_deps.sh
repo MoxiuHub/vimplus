@@ -21,4 +21,3 @@ go install github.com/fatih/motion@latest
 go install github.com/koron/iferr@master
 go install golang.org/x/tools/gopls@latest
 
-
