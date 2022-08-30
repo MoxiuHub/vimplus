@@ -40,6 +40,12 @@ function get_linux_distro()
     fi
 }
 
+install_vim_go_deps(){
+    bash ./install_go_vim_deps.sh
+}
+
+install_go_vim_deps
+
 isInstall() {
     # 判断是否安装了node
     if ! type "$1" >/dev/null 2>&1; then
