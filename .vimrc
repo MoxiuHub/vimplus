@@ -26,7 +26,6 @@ set cmdheight=2          " 设置命令行的高度
 set showcmd              " select模式下显示选中的行数
 set showmode             " 在底部显示当前模式
 set mouse=a              " 支持使用鼠标
-set t_Co=256             " 启用256色
 set selectmode=mouse     " 在选择模式下用鼠标来选择文本
 set ruler                " 总是显示光标位置
 set laststatus=2         " 总是显示状态栏
@@ -49,20 +48,20 @@ set cinoptions=g0,:0,N-s,(0    " 设置C/C++语言的具体缩进方式
 set smartindent          " 智能的选择对其方式
 filetype indent on       " 自适应不同语言的智能缩进
 set expandtab            " 将制表符扩展为空格
-set tabstop=2            " 设置编辑时制表符占用空格数
+set tabstop=4            " 设置编辑时制表符占用空格数
 set shiftwidth=4         " 设置格式化时制表符占用空格数
 set softtabstop=4        " 设置4个空格为制表符
 set smarttab             " 在行和段开始处使用制表符
 set nowrap               " 禁止折行
 set backspace=2          " 使用回车键正常处理indent,eol,start等
-set listchars=tab:»■,trail:■
-set list                 " 如果行尾有多余的空格（包括 Tab 键），该配置将让这些空格显示成可见的小方块
-set sidescroll=10        " 设置向右滚动字符数
-set nofoldenable         " 禁用折叠代码
+"set listchars=tab:»■,trail:■
+"set list                 " 如果行尾有多余的空格（包括 Tab 键），该配置将让这些空格显示成可见的小方块
+set sidescroll=5        " 设置向右滚动字符数
+"set nofoldenable         " 禁用折叠代码
 set linebreak            " 不会在单词内部折行
-set wrapmargin=2         " 折行处与编辑窗口的右边缘之间空出的字符数
-set sidescrolloff=15     " 水平滚动时，光标距离行首或行尾的位置（字符）
-set scrolloff=5          " 垂直滚动时，光标距离顶部/底部的位置（行)
+set wrapmargin=0         " 折行处与编辑窗口的右边缘之间空出的字符数
+set sidescrolloff=5     " 水平滚动时，光标距离行首或行尾的位置（字符）
+set scrolloff=2          " 垂直滚动时，光标距离顶部/底部的位置（行)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "     代码补全
@@ -106,15 +105,14 @@ set nobackup            " 设置不备份
 set nowritebackup       " 只有在编辑时不需要备份文件的情况下才需要
 set noswapfile          " 禁止生成临时文件
 set undofile            " 保留撤销历史
+"set noundofile          " 没有撤消文件
 set autoread            " 文件在vim之外修改过，自动重新读入
 set autowrite           " 设置自动保存
 set confirm             " 在处理未保存或只读文件的时候，弹出确认
-set backupdir=~/.vim/.backup//  
+set backupdir=~/.vim/.backup//
 set directory=~/.vim/.swp//
-set undodir=~/.vim/.undo// 
+set undodir=~/.vim/.undo//
 set autochdir           " 自动切换工作目录
-
-set noundofile          " 没有撤消文件
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 编码设置
@@ -240,13 +238,13 @@ nnoremap <leader><leader>p "+p
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
 
 " 主题设置
-set background=dark    " Setting dark mode
-"set background=light   " Setting light mode
+set background=dark                   " Setting dark mode
+"set background=light                  " Setting light mode
 colorscheme gruvbox
-let g:gruvbox_transparent_bg=2 " 启用透明背景。
+let g:gruvbox_transparent_bg=2        " 启用透明背景。
 let g:gruvbox_termcolors=256
-let g:gruvbox_contrast_dark='hard' "更改暗模式对比度。medium / hard / medium
-let g:gruvbox_contrast_light='hard' "更改暗模式对比度。medium / hard / medium
+let g:gruvbox_contrast_dark='hard'    "更改对比度。medium / hard / medium
+let g:gruvbox_contrast_light='hard'   "更改对比度。medium / hard / medium
 "  let g:gruvbox_number_column='bg1'
 nnoremap <silent> [oh :call gruvbox#hls_show()<CR>
 nnoremap <silent> ]oh :call gruvbox#hls_hide()<CR>
@@ -281,12 +279,6 @@ let g:netrw_liststyle=3
 " prepare-code
 let g:prepare_code_plugin_path = expand($HOME . "/.vim/plugged/prepare-code")
 
-" vim-buffer
-"  nnoremap <silent> <c-p> :PreviousBuffer<cr>
-"  nnoremap <silent> <c-n> :NextBuffer<cr>
-"  nnoremap <silent> <leader>d :CloseBuffer<cr>
-"  nnoremap <silent> <leader>D :BufOnly<cr>
-
 " vim-edit
 nnoremap Y :CopyText<cr>
 nnoremap D :DeleteText<cr>
@@ -298,8 +290,8 @@ nnoremap <silent> <leader>n :NERDTreeToggle<cr>
 let g:NERDTreeFileExtensionHighlightFullName = 1
 let g:NERDTreeExactMatchHighlightFullName = 1
 let g:NERDTreePatternMatchHighlightFullName = 1
-let g:NERDTreeHighlightFolders = 1         
-let g:NERDTreeHighlightFoldersFullName = 1 
+let g:NERDTreeHighlightFolders = 1
+let g:NERDTreeHighlightFoldersFullName = 1
 let g:NERDTreeDirArrowExpandable='▷'
 let g:NERDTreeDirArrowCollapsible='▼'
 
