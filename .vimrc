@@ -30,7 +30,7 @@ set selectmode=mouse     " 在选择模式下用鼠标来选择文本
 set ruler                " 总是显示光标位置
 set laststatus=2         " 总是显示状态栏
 set number               " 开启行号显示
-"set relativenumber       " 显示光标所在的当前行的相对行号
+set relativenumber       " 显示光标所在的当前行的相对行号
 set cursorline           " 高亮显示当前行
 set whichwrap+=<,>,h,l   " 设置光标键跨行
 set ttimeoutlen=0        " 设置<ESC>键响应时间
