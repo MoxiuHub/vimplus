@@ -56,12 +56,16 @@ set nowrap               " 禁止折行
 set backspace=2          " 使用回车键正常处理indent,eol,start等
 "set listchars=tab:»■,trail:■
 "set list                 " 如果行尾有多余的空格（包括 Tab 键），该配置将让这些空格显示成可见的小方块
-set sidescroll=5        " 设置向右滚动字符数
+set sidescroll=5          " 设置向右滚动字符数
+set linebreak             " 不会在单词内部折行
+set wrapmargin=0          " 折行处与编辑窗口的右边缘之间空出的字符数
+set sidescrolloff=5       " 水平滚动时，光标距离行首或行尾的位置（字符）
+set scrolloff=2           " 垂直滚动时，光标距离顶部/底部的位置（行)
 "set nofoldenable         " 禁用折叠代码
-set linebreak            " 不会在单词内部折行
-set wrapmargin=0         " 折行处与编辑窗口的右边缘之间空出的字符数
-set sidescrolloff=5     " 水平滚动时，光标距离行首或行尾的位置（字符）
-set scrolloff=2          " 垂直滚动时，光标距离顶部/底部的位置（行)
+set foldmethod=indent
+au BufWinLeave * silent mkview  " 保存文件的折叠状态
+au BufRead * silent loadview    " 恢复文件的折叠状态
+nnoremap <space> za             " 用空格来切换折叠状态
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "     代码补全
@@ -93,10 +97,28 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 搜索设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set wrapscan            " 结束后从头搜索
 set hlsearch            " 高亮显示搜索结果
 set incsearch           " 开启实时搜索功能
 set smartcase           " 只有一个大写字母的搜索词，将大小写敏感；其他情况都是大小写不敏感
 set ignorecase          " 搜索时大小写不敏感
+
+highlight Search ctermbg=yellow ctermfg=black
+highlight IncSearch ctermbg=black ctermfg=yellow
+highlight MatchParen cterm=underline ctermbg=NONE ctermfg=NONE
+" 当光标一段时间保持不动了，就禁用高亮
+" autocmd cursorhold * set nohlsearch
+" 当输入查找命令时，再启用高亮
+noremap n :set hlsearch<cr>n
+noremap N :set hlsearch<cr>N
+noremap / :set hlsearch<cr>/
+noremap ? :set hlsearch<cr>?
+noremap * *:set hlsearch<cr>
+
+nnoremap <c-h> :call DisableHighlight()<cr>
+function! DisableHighlight()
+    set nohlsearch
+endfunc
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 缓存设置
@@ -113,7 +135,8 @@ set backupdir=~/.vim/.backup//
 set directory=~/.vim/.swp//
 set undodir=~/.vim/.undo//
 set autochdir           " 自动切换工作目录
-
+set clipboard=unnamed
+set pastetoggle=<F9>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 编码设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -165,6 +188,7 @@ Plug 'chxuan/vimplus-startify'
 Plug 'preservim/tagbar'
 Plug 'Yggdroot/LeaderF'
 Plug 'morhetz/gruvbox'
+Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/incsearch.vim'
 Plug 'jiangmiao/auto-pairs'
@@ -187,6 +211,7 @@ Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-syntax'
 Plug 'kana/vim-textobj-function'
 Plug 'sgur/vim-textobj-parameter'
+Plug 'tmhedberg/SimpylFold'
 Plug 'Shougo/echodoc.vim'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'rhysd/clever-f.vim'
@@ -238,9 +263,9 @@ nnoremap <leader><leader>p "+p
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
 
 " 主题设置
-set background=dark                   " Setting dark mode
-"set background=light                  " Setting light mode
+"colorscheme dracula
 colorscheme gruvbox
+set background=dark                   " dark / light; Setting mode
 let g:gruvbox_transparent_bg=2        " 启用透明背景。
 let g:gruvbox_termcolors=256
 let g:gruvbox_contrast_dark='hard'    "更改对比度。medium / hard / medium
@@ -286,6 +311,10 @@ nnoremap C :ChangeText<cr>
 nnoremap <leader>r :ReplaceTo<space>
 
 " nerdtree
+" Ctrl+N 打开/关闭
+map <C-n> :NERDTreeToggle<CR>
+" 不显示这些文件
+let NERDTreeIgnore=['\.pyc$', '\~$', 'node_modules'] "ignore files in NERDTree
 nnoremap <silent> <leader>n :NERDTreeToggle<cr>
 let g:NERDTreeFileExtensionHighlightFullName = 1
 let g:NERDTreeExactMatchHighlightFullName = 1
@@ -294,6 +323,9 @@ let g:NERDTreeHighlightFolders = 1
 let g:NERDTreeHighlightFoldersFullName = 1
 let g:NERDTreeDirArrowExpandable='▷'
 let g:NERDTreeDirArrowCollapsible='▼'
+" 不显示项目树上额外的信息，例如帮助、提示什么的
+let NERDTreeMinimalUI=1
+
 
 " tagbar
 let g:tagbar_width = 30
@@ -309,6 +341,9 @@ let g:EasyMotion_smartcase = 1
 map <leader>w <Plug>(easymotion-bd-w)
 nmap <leader>w <Plug>(easymotion-overwin-w)
 " nerdtree-git-plugin
+let g:NERDTreeGitStatusUseNerdFonts = 1
+let g:NERDTreeGitStatusConcealBrackets = 1
+let g:NERDTreeGitStatusUntrackedFilesMode = 'all'
 let g:NERDTreeGitStatusIndicatorMapCustom = {
             \ "Modified"  : "✹",
             \ "Staged"    : "✚",
@@ -346,6 +381,16 @@ nnoremap <silent> <leader>rg :Leaderf rg<CR>
 nnoremap <silent> <Leader>m :Leaderf mru<CR>
 " Buffer
 nnoremap <silent> <Leader>b :Leaderf buffer<CR>
+
+" 常用快捷键
+nnoremap <silent> <Leader>gb :G blame<CR>
+nnoremap <silent> <Leader>gl :G pull<CR>
+nnoremap <silent> <Leader>gp :G push<CR>
+nnoremap <silent> <Leader>ga :G add -- .<CR>
+nnoremap <silent> zz :x<CR>
+nnoremap <silent> zw :w<CR>
+nnoremap <silent> zq :q!<CR>
+
 let g:Lf_WorkingDirectoryMode = 'AF'
 let g:Lf_RootMarkers = ['.git', '.svn', '.hg', '.project', '.root']
 let g:Lf_WindowPosition = 'popup'
@@ -376,6 +421,15 @@ noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+
+" 新增的行
+hi DiffAdd    ctermbg=235  ctermfg=108  guibg=#262626 guifg=#87af87 cterm=reverse gui=reverse
+" 变化的行
+hi DiffChange ctermbg=235  ctermfg=103  guibg=#262626 guifg=#8787af cterm=reverse gui=reverse
+" 删除的行
+hi DiffDelete ctermbg=235  ctermfg=131  guibg=#262626 guifg=#af5f5f cterm=reverse gui=reverse
+" 变化的文字
+hi DiffText   ctermbg=235  ctermfg=208  guibg=#262626 guifg=#ff8700 cterm=reverse gui=reverse
 
 " 加载自定义配置
 if filereadable(expand($HOME . '/.vimrc.custom.config'))
