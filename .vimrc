@@ -295,6 +295,15 @@ set termguicolors
 
 "netrw
 let g:netrw_liststyle=3
+let g:netrw_banner=0
+let g:netrw_browse_split=4
+let g:netrw_altv=1
+let g:netrw_winsize=20
+augroup ProjectDrawer 
+  autocmd! 
+  autocmd VimEnter * :Vexplore 
+augroup END
+
 
 " prepare-code
 let g:prepare_code_plugin_path = expand($HOME . "/.vim/plugged/prepare-code")
@@ -385,6 +394,7 @@ nnoremap <silent> <Leader>ga :G add -- .<CR>
 nnoremap <silent> zz :x<CR>
 nnoremap <silent> zw :w<CR>
 nnoremap <silent> zq :q!<CR>
+nnoremap <silent> ee :Ve<CR>
 
 let g:Lf_WorkingDirectoryMode = 'AF'
 let g:Lf_RootMarkers = ['.git', '.svn', '.hg', '.project', '.root']
