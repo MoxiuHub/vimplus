@@ -299,10 +299,12 @@ let g:netrw_banner=0
 let g:netrw_browse_split=4
 let g:netrw_altv=1
 let g:netrw_winsize=20
-augroup ProjectDrawer 
-  autocmd! 
-  autocmd VimEnter * :Vexplore 
-augroup END
+
+" 启动自动打开文件树
+"augroup ProjectDrawer 
+"  autocmd! 
+"  autocmd VimEnter * :Vexplore 
+"augroup END
 
 
 " prepare-code
@@ -332,7 +334,7 @@ let NERDTreeMinimalUI=1
 
 
 " tagbar
-let g:tagbar_width = 30
+let g:tagbar_width = 25
 nnoremap <silent> <leader>t :TagbarToggle<cr>
 
 " incsearch.vim
@@ -375,7 +377,7 @@ let g:Lf_UseCache = 0
 let g:Lf_ShowHidden=1
 let g:Lf_WindowHeight = 0.30
 let mapleader=','
-"nnoremap <leader>f :LeaderfFile .<cr>
+" 文件搜索
 nnoremap <silent> <leader>f :Leaderf file<CR>
 " 函数搜索（仅当前文件里）
 nnoremap <silent> <leader>F :LeaderfFunction<CR>
@@ -427,6 +429,7 @@ noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
+" vimdiff 高亮配置
 " 新增的行
 hi DiffAdd    ctermbg=235  ctermfg=108  guibg=#262626 guifg=#87af87 cterm=reverse gui=reverse
 " 变化的行
