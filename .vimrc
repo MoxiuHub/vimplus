@@ -38,6 +38,7 @@ set virtualedit=block,onemore   " 允许光标出现在最后一个字符的后�
 set updatetime=300       " 减少延迟
 set signcolumn=yes       " 一直显示列号
 set showmatch            " 显示括号匹配
+set clipboard=exclude:.* " 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 代码缩进和排版
@@ -66,6 +67,7 @@ set foldmethod=indent
 au BufWinLeave * silent mkview  " 保存文件的折叠状态
 au BufRead * silent loadview    " 恢复文件的折叠状态
 nnoremap <space> za             " 用空格来切换折叠状态
+let mapleader=','
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "     代码补全
@@ -145,6 +147,7 @@ set helplang=cn
 set termencoding=utf-8
 set encoding=utf8
 set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
+set shell=/bin/bash
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gvim/macvim设置
@@ -180,7 +183,8 @@ command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 Plug 'flazz/vim-colorschemes'
-Plug 'fatih/vim-go'        " install: :GoInstallBinaries
+Plug 'fatih/vim-go'  " install: :GoInstallBinaries
+Plug 'AndrewRadev/splitjoin.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'chxuan/vim-edit'
 Plug 'chxuan/prepare-code'
@@ -188,42 +192,60 @@ Plug 'chxuan/vimplus-startify'
 Plug 'preservim/tagbar'
 Plug 'Yggdroot/LeaderF'
 Plug 'morhetz/gruvbox'
-Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/incsearch.vim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'preservim/nerdtree'
+Plug 'preservim/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
 Plug 'godlygeek/tabular'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-commentary' " 注释插件:[n]gc
 Plug 'tpope/vim-endwise'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
 Plug 'junegunn/vim-slash'
-Plug 'kana/vim-textobj-user'
-Plug 'kana/vim-textobj-indent'
-Plug 'kana/vim-textobj-syntax'
-Plug 'kana/vim-textobj-function'
-Plug 'sgur/vim-textobj-parameter'
-Plug 'tmhedberg/SimpylFold'
 Plug 'Shougo/echodoc.vim'
 Plug 'terryma/vim-smooth-scroll'
-Plug 'rhysd/clever-f.vim'
-Plug 'vim-scripts/indentpython.vim'
-Plug 'pangloss/vim-javascript'    " JavaScript support
-Plug 'leafgarland/typescript-vim' " TypeScript syntax
-Plug 'maxmellon/vim-jsx-pretty'   " JS and JSX syntax
-Plug 'jparise/vim-graphql'        " GraphQL syntax
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 call plug#end()
+
+" vim-go 
+let g:go_list_type = "quickfix"
+let g:go_test_timeout = '20s'
+autocmd FileType go nmap <leader>t  <Plug>(go-test)
+autocmd FileType go nmap <leader>b  <Plug>(go-build)
+
+autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_flow = 1
+augroup javascript_folding
+    au!
+    au FileType javascript setlocal foldmethod=syntax
+augroup END
+let g:javascript_conceal_function             = "ƒ"
+let g:javascript_conceal_null                 = "ø"
+let g:javascript_conceal_this                 = "@"
+let g:javascript_conceal_return               = "⇚"
+let g:javascript_conceal_undefined            = "¿"
+let g:javascript_conceal_NaN                  = "ℕ"
+let g:javascript_conceal_prototype            = "¶"
+let g:javascript_conceal_static               = "•"
+let g:javascript_conceal_super                = "Ω"
+let g:javascript_conceal_arrow_function       = "⇒"
+let g:javascript_conceal_noarg_arrow_function = "🞅"
+let g:javascript_conceal_underscore_arrow_function = "🞅"
+set conceallevel=1
+
 
 " load vim default plugin
 runtime macros/matchit.vim
@@ -233,14 +255,6 @@ nnoremap <leader>h :view +let\ &l:modifiable=0 ~/.vimplus/help.md<cr>
 
 " 打开当前光标所在单词的vim帮助文档
 nnoremap <leader>H :execute ":help " . expand("<cword>")<cr>
-
-" 重新加载vimrc文件
-nnoremap <leader>s :source $MYVIMRC<cr>
-
-" 安装、更新、删除插件
-nnoremap <leader><leader>i :PlugInstall<cr>
-nnoremap <leader><leader>u :PlugUpdate<cr>
-nnoremap <leader><leader>c :PlugClean<cr>
 
 " 分屏窗口移动
 nnoremap <c-j> <c-w>j
@@ -263,8 +277,8 @@ colorscheme gruvbox
 set background=dark                   " dark / light; Setting mode
 let g:gruvbox_transparent_bg=2        " 启用透明背景。
 let g:gruvbox_termcolors=256
-let g:gruvbox_contrast_dark='hard'    "更改对比度。medium / hard / medium
-let g:gruvbox_contrast_light='hard'   "更改对比度。medium / hard / medium
+let g:gruvbox_contrast_dark='medium'    "更改对比度。medium / hard / medium
+let g:gruvbox_contrast_light='medium'   "更改对比度。medium / hard / medium
 "  let g:gruvbox_number_column='bg1'
 nnoremap <silent> [oh :call gruvbox#hls_show()<CR>
 nnoremap <silent> ]oh :call gruvbox#hls_hide()<CR>
@@ -272,17 +286,6 @@ nnoremap <silent> coh :call gruvbox#hls_toggle()<CR>
 nnoremap * :let @/ = ""<CR>:call gruvbox#hls_show()<CR>*
 nnoremap / :let @/ = ""<CR>:call gruvbox#hls_show()<CR>/
 nnoremap ? :let @/ = ""<CR>:call gruvbox#hls_show()<CR>?
-" airline
-let g:airline_theme="gruvbox"
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
 
 if has("termguicolors")
     " fix bug for vim
@@ -300,13 +303,6 @@ let g:netrw_browse_split=4
 let g:netrw_altv=1
 let g:netrw_winsize=20
 
-" 启动自动打开文件树
-"augroup ProjectDrawer 
-"  autocmd! 
-"  autocmd VimEnter * :Vexplore 
-"augroup END
-
-
 " prepare-code
 let g:prepare_code_plugin_path = expand($HOME . "/.vim/plugged/prepare-code")
 
@@ -319,7 +315,7 @@ nnoremap <leader>r :ReplaceTo<space>
 " nerdtree
 " Ctrl+N 打开/关闭
 map <C-n> :NERDTreeToggle<CR>
-" 不显示这些文件
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let NERDTreeIgnore=['\.pyc$', '\~$', 'node_modules'] "ignore files in NERDTree
 nnoremap <silent> <leader>n :NERDTreeToggle<cr>
 let g:NERDTreeFileExtensionHighlightFullName = 1
@@ -329,13 +325,11 @@ let g:NERDTreeHighlightFolders = 1
 let g:NERDTreeHighlightFoldersFullName = 1
 let g:NERDTreeDirArrowExpandable='▷'
 let g:NERDTreeDirArrowCollapsible='▼'
-" 不显示项目树上额外的信息，例如帮助、提示什么的
+let NERDTreeAutoCenter=1
+let NERDTreeWinSize=25
+let NERDTreeShowLineNumbers=1
 let NERDTreeMinimalUI=1
 
-
-" tagbar
-let g:tagbar_width = 25
-nnoremap <silent> <leader>t :TagbarToggle<cr>
 
 " incsearch.vim
 map /  <Plug>(incsearch-forward)
@@ -376,7 +370,6 @@ let g:Lf_WildIgnore = {
 let g:Lf_UseCache = 0
 let g:Lf_ShowHidden=1
 let g:Lf_WindowHeight = 0.30
-let mapleader=','
 " 文件搜索
 nnoremap <silent> <leader>f :Leaderf file<CR>
 " 函数搜索（仅当前文件里）
